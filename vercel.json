@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/angel",
+      "destination": "/angel/index.html"
+    },
+    {
+      "source": "/roselin",
+      "destination": "/roselin/index.html"
+    }
+  ]
+}
