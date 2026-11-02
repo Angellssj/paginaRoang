@@ -7,8 +7,28 @@
       "destination": "/angel/index.html"
     },
     {
+      "source": "/angel/priv",
+      "destination": "/angel/priv/index.html"
+    },
+    {
       "source": "/roselin",
       "destination": "/roselin/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/angel/priv",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-cache" }
+      ]
+    },
+    {
+      "source": "/angel/priv/:path*",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-cache" }
+      ]
     }
   ]
 }
