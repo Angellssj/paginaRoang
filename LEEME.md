@@ -17,13 +17,15 @@ Las tres vistas usan el mismo sistema que el portafolio de Ángel (`Angellssj/po
 - `assets/styles.css`: tokens de marca (azul `#0057FF`, cian `#00E5E0`), tema oscuro y claro, y todos los componentes. Cambia colores y medidas en el bloque `:root` del inicio.
 - `assets/fonts/`: Unbounded (titulares) y Jost (texto), autoalojadas con su licencia OFL.
 - `assets/brand/`: logos oficiales de ROANG. No los redibujes.
+- `favicon.ico` (raíz) y `assets/brand/favicon-32.png`, `favicon-192.png`, `apple-touch-icon.png`: favicon recortado de la «R» oficial para que se lea a 16 px.
+- `assets/img/angel-hero.webp`: retrato de Ángel en `/angel`, el mismo recorte del portafolio.
 - `assets/img/hero-bg.webp`: fondo de los héroes. `og-roang.jpg`: imagen para compartir en redes (1200×630), hecha con ese fondo y el logo oficial.
 - El botón de tema guarda la preferencia en `localStorage` con la clave `ag-theme`, la misma del portafolio.
 - `docs/branding/`: capturas de antes y después del rediseño. `.vercelignore` las deja fuera del sitio publicado.
 
 ## Configuración del contacto (importante)
 
-El sitio hereda el teléfono **56920019066** de la landing anterior de Ángel como canal de contacto para las tres vistas. **Antes de publicar, confirmar si también es el número comercial de ROANG y de consultas para Roselin.** Para cambiarlo, edita `WHATSAPP_NUMBER` en `assets/app.js`.
+El teléfono **56920019066** es el canal de contacto de las tres vistas: ROANG, Ángel y Roselin (confirmado por Ángel en noviembre de 2026). Para cambiarlo, edita `WHATSAPP_NUMBER` en `assets/app.js`.
 
 El portafolio de Ángel conserva el enlace de Google Drive suministrado en su landing original.
 
@@ -41,8 +43,9 @@ Después conecta el dominio `roang.cl` con el hosting desde su panel, configura 
 
 ## Antes de lanzar
 
-1. Confirmar que el número de WhatsApp es el canal correcto para ROANG y Roselin.
-2. Revisar textos, alcance real de cada servicio y responsabilidad de cada profesional.
-3. Añadir logo/identidad definitiva y, si corresponde, redes y datos legales reales.
-4. Verificar que los seis reels y el Drive están autorizados para publicación.
-5. Probar en móvil, revisar accesibilidad y SEO una vez publicados.
+Confirmado (noviembre de 2026): el número de WhatsApp es el canal de las tres vistas, y los seis reels están autorizados para publicarse. La identidad definitiva (logos oficiales de ROANG) ya está aplicada.
+
+1. Revisar textos, alcance real de cada servicio y responsabilidad de cada profesional.
+2. Si corresponde, añadir redes y datos legales reales.
+3. Confirmar que el contenido del Drive enlazado también está autorizado.
+4. Reemplazar las vistas conceptuales de Roselin por capturas reales cuando existan.
