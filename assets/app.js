@@ -9,6 +9,25 @@
 
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });
 
+  // Tema claro/oscuro: misma clave que el portafolio de Ángel, para que la preferencia viaje entre sitios.
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const syncTheme = () => {
+    const light = root.getAttribute('data-theme') === 'light';
+    if (themeMeta) themeMeta.content = light ? '#f8f8f6' : '#050b18';
+    if (!themeBtn) return;
+    themeBtn.setAttribute('aria-pressed', String(light));
+    themeBtn.setAttribute('aria-label', light ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
+  };
+  syncTheme();
+  if (themeBtn) themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('ag-theme', next); } catch (e) { /* almacenamiento no disponible */ }
+    syncTheme();
+  });
+
   const nav = document.getElementById('navMenu');
   const toggle = document.getElementById('mobileToggle');
   if (nav && toggle) {
