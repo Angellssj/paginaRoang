@@ -1,0 +1,15 @@
+{
+  "name": "Mi Vida · Ángel",
+  "short_name": "Mi Vida",
+  "description": "Rutinas, calendario, metas, fe y finanzas en un solo lugar.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050b18",
+  "theme_color": "#050b18",
+  "lang": "es-CL",
+  "icons": [
+    { "src": "assets/brand/roang-icon-dark-512.webp", "sizes": "512x512", "type": "image/webp", "purpose": "any" },
+    { "src": "assets/brand/favicon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" }
+  ]
+}

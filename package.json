@@ -1,0 +1,9 @@
+{
+  "name": "pagina-roang",
+  "private": true,
+  "type": "module",
+  "description": "Sitio estático de ROANG. package.json existe solo para el middleware de /angel/priv.",
+  "dependencies": {
+    "@vercel/functions": "^2.0.0"
+  }
+}
