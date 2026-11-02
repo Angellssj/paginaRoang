@@ -1,7 +1,7 @@
 /** ROANG · sitio corporativo estático */
 (() => {
   'use strict';
-  // Contacto heredado de la landing original de Ángel; verificar si será el canal central de ROANG.
+  // Canal de contacto de ROANG, Ángel y Roselin (confirmado).
   const WHATSAPP_NUMBER = '56920019066';
   const urlWhatsApp = message => 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
   const page = document.body.dataset.page || 'home';
@@ -88,14 +88,14 @@
   }
 
   let currentVideo = null;
-  const videoButtons = [...document.querySelectorAll('[data-reel], [data-hero-reel]')];
+  const videoButtons = [...document.querySelectorAll('[data-reel]')];
   const pause = button => {
     const v = button.querySelector('video');
     if (!v) return;
     v.pause();
     try { v.currentTime = 0; } catch (e) { /* metadata may not be loaded */ }
     button.classList.remove('playing');
-    const mark = button.querySelector('.play-mark,.play-bubble');
+    const mark = button.querySelector('.play-mark');
     if (mark) mark.textContent = '▶';
     button.setAttribute('aria-label', button.getAttribute('aria-label').replace(/^Pausar/, 'Reproducir'));
   };
@@ -107,7 +107,7 @@
     if (!v.src && v.dataset.src) v.src = v.dataset.src;
     v.muted = true;
     v.playsInline = true;
-    const mark = button.querySelector('.play-mark,.play-bubble');
+    const mark = button.querySelector('.play-mark');
     v.play().then(() => {
       currentVideo = v;
       button.classList.add('playing');
