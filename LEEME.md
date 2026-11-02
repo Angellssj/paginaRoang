@@ -12,20 +12,22 @@ Tres vistas, un solo dominio y sin tarifas públicas:
 
 ## Identidad visual
 
-Las tres vistas usan el mismo sistema que el portafolio de Ángel (`Angellssj/portfolio-angel-roang`):
+Las tres páginas públicas mantienen los logos y colores oficiales de ROANG y usan una tipografía nativa: `-apple-system`, `BlinkMacSystemFont`, Segoe UI, Helvetica Neue y Arial. En Apple se utiliza la fuente del sistema; no se distribuyen archivos de San Francisco. Las fuentes del área privada son independientes.
 
-- `assets/styles.css`: tokens de marca (azul `#0057FF`, cian `#00E5E0`), tema oscuro y claro, y todos los componentes. Cambia colores y medidas en el bloque `:root` del inicio.
-- `assets/fonts/`: Unbounded (titulares) y Jost (texto), autoalojadas con su licencia OFL.
-- `assets/brand/`: logos oficiales de ROANG. No los redibujes.
-- `favicon.ico` (raíz) y `assets/brand/favicon-32.png`, `favicon-192.png`, `apple-touch-icon.png`: favicon recortado de la «R» oficial para que se lea a 16 px.
-- `assets/img/angel-hero.webp`: retrato de Ángel en `/angel`, el mismo recorte del portafolio.
-- `assets/img/hero-bg.webp`: fondo de los héroes. `og-roang.jpg`: imagen para compartir en redes (1200×630), hecha con ese fondo y el logo oficial.
-- El botón de tema guarda la preferencia en `localStorage` con la clave `ag-theme`, la misma del portafolio.
-- `docs/branding/`: capturas de antes y después del rediseño. `.vercelignore` las deja fuera del sitio publicado.
+- `assets/styles.css`: sistema visual público, claro/oscuro, responsive y motion graphics CSS.
+- `assets/app.js`: menú con gestión de foco, preferencia de tema/movimiento, formulario de WhatsApp y coordinación de reproducción de videos.
+- `assets/brand/`: logos oficiales. No se redibujaron.
+- Los videos usan controles nativos, sonido a elección del visitante y `preload="none"`. No hay autoplay.
+- El botón de pausa del encabezado detiene las animaciones. Se respeta `prefers-reduced-motion`.
+- `ag-theme` conserva la compatibilidad con la preferencia del portafolio; `roang-motion` guarda la preferencia de movimiento.
+- `angel/priv/` y `middleware.js` conservan su contenido y protección existentes.
+- El formulario solo exige servicio e idea; nombre y correo son opcionales. No almacena ni envía datos a un backend. Prepara un enlace y requiere que la persona envíe el mensaje en WhatsApp; ofrece un enlace de reapertura si se bloquea la ventana.
+- Las demos de Roselin están identificadas como conceptos, no como trabajos entregados.
+- Las rutas canónicas de los perfiles son `/angel` y `/roselin`.
 
 ## Configuración del contacto (importante)
 
-El teléfono **56920019066** es el canal de contacto de las tres vistas: ROANG, Ángel y Roselin (confirmado por Ángel en noviembre de 2026). Para cambiarlo, edita `WHATSAPP_NUMBER` en `assets/app.js`.
+El teléfono **56920019066** es el canal de contacto de las tres vistas: ROANG, Ángel y Roselin (confirmado por Ángel en noviembre de 2026). Para cambiarlo, revisa los enlaces HTML y el destino de WhatsApp en `assets/app.js`.
 
 El portafolio de Ángel conserva el enlace de Google Drive suministrado en su landing original.
 

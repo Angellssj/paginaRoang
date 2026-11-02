@@ -1,124 +1,117 @@
-/** ROANG · sitio corporativo estático */
+/* ROANG — progressive enhancement; all contact links work without JavaScript. */
 (() => {
   'use strict';
-  // Canal de contacto de ROANG, Ángel y Roselin (confirmado).
-  const WHATSAPP_NUMBER = '56920019066';
-  const urlWhatsApp = message => 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  const page = document.body.dataset.page || 'home';
-  const context = {home:'ROANG',angel:'Ángel · ROANG',roselin:'Roselin · ROANG'}[page] || 'ROANG';
-
-  document.querySelectorAll('[data-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });
-
-  // Tema claro/oscuro: misma clave que el portafolio de Ángel, para que la preferencia viaje entre sitios.
   const root = document.documentElement;
-  const themeBtn = document.getElementById('themeToggle');
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const syncTheme = () => {
-    const light = root.getAttribute('data-theme') === 'light';
-    if (themeMeta) themeMeta.content = light ? '#f8f8f6' : '#050b18';
-    if (!themeBtn) return;
-    themeBtn.setAttribute('aria-pressed', String(light));
-    themeBtn.setAttribute('aria-label', light ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
-  };
-  syncTheme();
-  if (themeBtn) themeBtn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('ag-theme', next); } catch (e) { /* almacenamiento no disponible */ }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const themeButton = document.getElementById('themeToggle');
+  const motionButton = document.getElementById('motionToggle');
+  const readPreference = key => { try { return localStorage.getItem(key); } catch { return null; } };
+  const savePreference = (key,value) => { try { localStorage.setItem(key,value); } catch { /* Optional storage. */ } };
+  function syncTheme() {
+    const light = root.dataset.theme === 'light';
+    themeButton?.setAttribute('aria-pressed',String(light));
+    themeButton?.setAttribute('aria-label',light ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = light ? '#f5f5f7' : '#08090b';
+  }
+  themeButton?.addEventListener('click',() => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    savePreference('ag-theme',root.dataset.theme);
     syncTheme();
   });
+  syncTheme();
+  function syncMotion() {
+    const paused = reduced.matches || readPreference('roang-motion') === 'off';
+    root.dataset.motion = paused ? 'off' : 'on';
+    if (motionButton) {
+      motionButton.disabled = reduced.matches;
+      motionButton.setAttribute('aria-pressed',String(paused));
+      const label = reduced.matches ? 'Movimiento reducido según tu dispositivo' : paused ? 'Activar animaciones' : 'Pausar animaciones';
+      motionButton.setAttribute('aria-label',label);
+      motionButton.title = label;
+      motionButton.firstElementChild.textContent = paused ? '▷' : 'Ⅱ';
+    }
+  }
+  motionButton?.addEventListener('click',() => {
+    savePreference('roang-motion',root.dataset.motion === 'off' ? 'on' : 'off');
+    syncMotion();
+  });
+  reduced.addEventListener('change',syncMotion);
+  syncMotion();
 
   const nav = document.getElementById('navMenu');
   const toggle = document.getElementById('mobileToggle');
-  if (nav && toggle) {
-    const close = () => { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label','Abrir menú'); };
-    toggle.addEventListener('click', () => {
-      const expanded = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(expanded));
-      toggle.setAttribute('aria-label', expanded ? 'Cerrar menú' : 'Abrir menú');
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-    document.addEventListener('click', e => { if (!nav.contains(e.target) && !toggle.contains(e.target)) close(); });
-  }
-
-  document.querySelectorAll('a[data-quote]').forEach(link => {
-    const service = link.dataset.quote;
-    const intro = page === 'angel' ? 'Hola Ángel' : 'Hola, equipo ROANG';
-    const msg = `${intro}, quiero solicitar una cotización privada sobre ${service}. ¿Podemos conversar sobre mi proyecto?`;
-    link.href = urlWhatsApp(msg);
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
+  const mobile = matchMedia('(max-width: 880px)');
+  const closeMenu = (restoreFocus = false) => {
+    nav?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded','false');
+    toggle?.setAttribute('aria-label','Abrir menú');
+    if (restoreFocus) toggle?.focus();
+  };
+  toggle?.addEventListener('click',event => {
+    if (nav.classList.contains('open')) { closeMenu(true); return; }
+    nav.classList.add('open');
+    toggle.setAttribute('aria-expanded','true');
+    toggle.setAttribute('aria-label','Cerrar menú');
+    if (event.detail === 0) nav.querySelector('a')?.focus();
   });
+  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click',() => {
+    closeMenu();
+    if (link.hash && link.pathname === location.pathname) {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target) { target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }
+    }
+  }));
+  document.addEventListener('keydown',event => {
+    if (event.key === 'Escape' && nav?.classList.contains('open')) closeMenu(true);
+  });
+  document.addEventListener('click',event => {
+    if (mobile.matches && nav?.classList.contains('open') && !nav.contains(event.target) && !toggle.contains(event.target)) {
+      closeMenu(nav.contains(document.activeElement));
+    }
+  });
+  document.addEventListener('focusin',event => {
+    if (mobile.matches && nav?.classList.contains('open') && !nav.contains(event.target) && event.target !== toggle) closeMenu();
+  });
+  mobile.addEventListener('change',() => closeMenu(nav?.contains(document.activeElement)));
 
-  document.querySelectorAll('form.quote-form').forEach(form => form.addEventListener('submit', event => {
+  document.querySelectorAll('[data-year]').forEach(node => node.textContent = String(new Date().getFullYear()));
+  document.querySelectorAll('.quote-form').forEach(form => form.addEventListener('submit',event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
     const fields = new FormData(form);
-    const msg = [
-      `Hola, quiero solicitar una cotización privada a ${context}.`,
-      `Nombre: ${fields.get('nombre') || ''}`,
-      `Contacto: ${fields.get('contacto') || ''}`,
-      `Servicio: ${fields.get('servicio') || ''}`,
-      `Proyecto: ${fields.get('proyecto') || ''}`
-    ].join('\n');
-    const link = document.createElement('a');
-    link.href = urlWhatsApp(msg);
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }));
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealNodes = [...document.querySelectorAll('.reveal')];
-  if (prefersReduced || !('IntersectionObserver' in window)) {
-    revealNodes.forEach(el => el.classList.add('visible'));
-  } else {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .075, rootMargin:'0px 0px 20px 0px' });
-    revealNodes.forEach(el => observer.observe(el));
-  }
-
-  let currentVideo = null;
-  const videoButtons = [...document.querySelectorAll('[data-reel]')];
-  const pause = button => {
-    const v = button.querySelector('video');
-    if (!v) return;
-    v.pause();
-    try { v.currentTime = 0; } catch (e) { /* metadata may not be loaded */ }
-    button.classList.remove('playing');
-    const mark = button.querySelector('.play-mark');
-    if (mark) mark.textContent = '▶';
-    button.setAttribute('aria-label', button.getAttribute('aria-label').replace(/^Pausar/, 'Reproducir'));
-  };
-  videoButtons.forEach(button => button.addEventListener('click', () => {
-    const v = button.querySelector('video');
-    if (!v) return;
-    if (currentVideo === v && !v.paused) { pause(button); currentVideo = null; return; }
-    videoButtons.filter(b => b !== button).forEach(pause);
-    if (!v.src && v.dataset.src) v.src = v.dataset.src;
-    v.muted = true;
-    v.playsInline = true;
-    const mark = button.querySelector('.play-mark');
-    v.play().then(() => {
-      currentVideo = v;
-      button.classList.add('playing');
-      if (mark) mark.textContent = '❚❚';
-      button.setAttribute('aria-label', button.getAttribute('aria-label').replace(/^Reproducir/, 'Pausar'));
-    }).catch(() => { if (mark) mark.textContent = '▶'; });
-  }));
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      videoButtons.forEach(pause);
-      currentVideo = null;
+    const idea = String(fields.get('text') || '').trim();
+    const textarea = form.querySelector('textarea');
+    if (!idea) {
+      textarea.setCustomValidity('Cuéntanos brevemente qué necesitas.');
+      textarea.reportValidity();
+      textarea.addEventListener('input',() => textarea.setCustomValidity(''),{once:true});
+      return;
     }
-  });
+    const who = {home:'ROANG',angel:'Ángel · ROANG',roselin:'Roselin · ROANG'}[form.dataset.context] || 'ROANG';
+    const lines = [`Hola, quiero conversar sobre un proyecto con ${who}.`];
+    const name = String(fields.get('nombre') || '').trim();
+    const email = String(fields.get('correo') || '').trim();
+    if (name) lines.push(`Nombre: ${name}`);
+    if (email) lines.push(`Correo: ${email}`);
+    lines.push(`Servicio: ${fields.get('servicio')}`,`Idea: ${idea}`);
+    const url = 'https://wa.me/56920019066?text=' + encodeURIComponent(lines.join('\n'));
+    const link = document.createElement('a');
+    link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.textContent = 'Volver a abrir mi mensaje en WhatsApp';
+    const status = form.querySelector('.form-status');
+    status.replaceChildren(document.createTextNode('Mensaje preparado. Envíalo desde WhatsApp. Si no se abrió la ventana: '),link);
+    link.click();
+    // The page never claims receipt: delivery only occurs after the visitor sends in WhatsApp.
+  }));
+
+  const videos = [...document.querySelectorAll('video')];
+  videos.forEach(video => video.addEventListener('play',() => videos.filter(other => other !== video).forEach(other => other.pause())));
+  document.addEventListener('visibilitychange',() => { if (document.hidden) videos.forEach(video => video.pause()); });
+  if ('IntersectionObserver' in window && !reduced.matches && root.dataset.motion !== 'off') {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    },{threshold:.06,rootMargin:'0px 0px 10px 0px'});
+    document.querySelectorAll('.reveal').forEach(node => { node.classList.add('will-reveal'); observer.observe(node); });
+  }
 })();
