@@ -25,6 +25,12 @@ Las tres páginas públicas mantienen los logos y colores oficiales de ROANG y u
 - Las demos de Roselin están identificadas como conceptos, no como trabajos entregados.
 - Las rutas canónicas de los perfiles son `/angel` y `/roselin`.
 
+## Retratos y casos reales
+
+- `assets/img/roselin-retrato.webp`: retrato circular de Roselin (480 px, fondo transparente). Se usa en la tarjeta del equipo (inicio) y en el hero de `/roselin`.
+- Sección `#casos` en el inicio: Virtuous Body Care, tienda Shopify publicada. La vista del navegador es ilustrativa y usa productos y precios reales de la tienda; si cambian, actualizarlos.
+- Reseñas: solo con palabras reales de la clienta y su autorización. Hay un bloque `case-quote` comentado en `index.html` listo para usarse.
+
 ## Configuración del contacto (importante)
 
 El teléfono **56920019066** es el canal de contacto de las tres vistas: ROANG, Ángel y Roselin (confirmado por Ángel en noviembre de 2026). Para cambiarlo, revisa los enlaces HTML y el destino de WhatsApp en `assets/app.js`.

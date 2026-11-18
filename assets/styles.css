@@ -323,3 +323,53 @@ input::placeholder,textarea::placeholder { color: var(--muted); opacity: 1; }
  *,*:before,*:after { animation: none!important; transition: none!important; }
  .will-reveal { opacity: 1!important; transform: none!important; }
 }
+
+/* Retrato de Roselin: foto circular (en /roselin y en la tarjeta del equipo) */
+.portrait-stage.portrait-round { align-items: center; }
+.portrait-round > img { width: 360px; max-width: 76%; max-height: none; aspect-ratio: 1; border-radius: 50%; object-fit: cover; border: 1px solid #576b91; box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 0 0 10px rgba(36,92,207,.14); }
+.portrait-round .portrait-orbit { width: 440px; height: 440px; top: calc(50% - 220px); left: calc(50% - 220px); }
+.portrait-round .portrait-label { left: 10%; bottom: 40px; }
+.team-card > .team-avatar { position: absolute; top: 28px; right: 28px; width: 190px; height: 190px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); z-index: -1; }
+
+/* Caso real: Virtuous Body Care */
+.case-card { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; border: 1px solid var(--line); background: var(--surface); border-radius: 26px; padding: 44px; }
+.case-copy .card-index { margin-bottom: 24px; }
+.case-copy h3 { font-size: clamp(32px,3.2vw,44px); margin-bottom: 16px; }
+.case-copy > p { color: var(--muted); font-size: 16px; }
+.case-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 6px; }
+.case-meta span { font-size: 11px; letter-spacing: .08em; color: var(--muted); border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; }
+.case-list { list-style: none; padding: 0; margin: 18px 0 28px; font-size: 14px; color: var(--muted); }
+.case-list li { padding: 11px 0; border-top: 1px solid var(--line); }
+.case-quote { margin: 0 0 28px; padding-left: 18px; border-left: 2px solid var(--accent); }
+.case-quote footer { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.case-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.case-visual { margin: 0; }
+.case-visual figcaption { margin-top: 14px; font-size: 12px; color: var(--muted); }
+.store-preview { background: #f6f1e9; color: #3b2f26; border: 1px solid #d9cdbd; border-radius: 20px; overflow: hidden; }
+.store-preview .browser-dots { background: #ebe3d7; }
+.store-preview .browser-dots i { background: #b9a993; }
+.store-preview .browser-dots span { color: #6f5f4e; font-size: 10px; }
+.store-hero { padding: 30px 28px 24px; }
+.store-hero small { display: block; font-size: 9px; letter-spacing: .18em; color: #7d6957; }
+.store-hero strong { display: block; font-family: Georgia,'Times New Roman',serif; font-weight: 400; font-size: 34px; line-height: 1.08; margin: 10px 0 16px; }
+.store-hero em { display: inline-block; font-style: normal; font-size: 10px; letter-spacing: .06em; background: #3b2f26; color: #f6f1e9; padding: 7px 15px; border-radius: 20px; }
+.store-products { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; padding: 0 28px; }
+.store-products div { background: #fff; border: 1px solid #e6dccf; border-radius: 12px; padding: 9px; font-size: 11px; line-height: 1.35; }
+.store-products i { display: block; aspect-ratio: 1; border-radius: 8px; margin-bottom: 8px; }
+.store-products b { display: block; margin-top: 4px; font-weight: 600; }
+.swatch-lavender { background: radial-gradient(circle at 35% 30%,#efe6f6,#b9a2d1 75%); }
+.swatch-oat { background: radial-gradient(circle at 35% 30%,#fbf3e3,#d9bf92 75%); }
+.swatch-glow { background: radial-gradient(circle at 35% 30%,#fff4e8,#e3b48a 75%); }
+.store-ship { margin: 16px 28px 22px; padding-top: 12px; border-top: 1px solid #e1d6c7; font-size: 10px; color: #6f5f4e; }
+@media (max-width: 880px) {
+  .case-card { grid-template-columns: 1fr; gap: 34px; padding: 30px; }
+  .team-card > .team-avatar { width: 150px; height: 150px; top: 22px; right: 22px; }
+}
+@media (max-width: 640px) {
+  .case-card { padding: 24px; border-radius: 22px; }
+  .portrait-round > img { width: 280px; max-height: none; }
+  .portrait-round .portrait-orbit { width: 340px; height: 340px; top: calc(50% - 170px); left: calc(50% - 170px); }
+  .portrait-round .portrait-label { left: 50%; transform: translateX(-50%); bottom: 18px; white-space: nowrap; }
+  .team-card > .team-avatar { width: 104px; height: 104px; top: 18px; right: 18px; }
+  .store-hero strong { font-size: 28px; } .store-products { padding: 0 18px; gap: 8px; } .store-hero { padding: 24px 18px 20px; } .store-ship { margin: 14px 18px 18px; }
+}
